@@ -4,6 +4,19 @@ plugins {
 }
 
 android {
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
+
+    kotlinOptions {
+        jvmTarget = "19"
+    }
+
     namespace = "com.totallynotrajat.tictactoe"
     compileSdk = 34
 
@@ -49,7 +62,14 @@ android {
     }
 }
 
+
+
 dependencies {
+    implementation ("com.google.android.gms:play-services-ads-identifier:18.2.0")
+    implementation ("com.android.installreferrer:installreferrer:2.2")
+    implementation("com.miui.referrer:homereferrer:1.0.0.6")
+    implementation("com.google.android.gms:play-services-base:18.8.0")
+    implementation("com.trackier:android-sdk:1.6.77")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
@@ -60,7 +80,8 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.animation:animation:1.5.4")
     implementation("androidx.navigation:navigation-compose:2.7.5")
-    
+    implementation("com.google.android.material:material:1.11.0")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

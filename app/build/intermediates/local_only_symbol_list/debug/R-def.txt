@@ -1,0 +1,35 @@
+R_DEF: Internal format may change without notice
+local
+color accent_gray
+color black
+color dark_gray
+color draw_color
+color light_gray
+color medium_gray
+color player_o_color
+color player_x_color
+color text_primary
+color text_secondary
+color victory_color
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string game_draw
+string new_game
+string play_again
+string player_o
+string player_o_wins
+string player_x
+string player_x_wins
+string score
+string session_score
+string start_game
+string welcome_subtitle
+string welcome_title
+string wins
+style Theme.TicTacToe
+xml backup_rules
+xml data_extraction_rules

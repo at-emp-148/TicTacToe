@@ -16,9 +16,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+
 
 @Composable
 fun GameScreen(
@@ -51,19 +53,19 @@ fun GameScreen(
                 xWins = gameState.xWins,
                 oWins = gameState.oWins
             )
-            
+
             // Current player indicator
             if (!gameState.isGameOver) {
                 CurrentPlayerIndicator(currentPlayer = gameState.currentPlayer)
             }
-            
+
             // Game board
             GameBoard(
                 board = gameState.board,
                 onCellClick = onCellClick,
                 isGameOver = gameState.isGameOver
             )
-            
+
             // Game status and controls
             if (gameState.isGameOver) {
                 GameOverDisplay(
@@ -73,9 +75,9 @@ fun GameScreen(
                     onBackToStart = onBackToStart
                 )
             }
-            
+
             Spacer(modifier = Modifier.weight(1f))
-            
+
             // Back to start button
             if (!gameState.isGameOver) {
                 OutlinedButton(
@@ -136,14 +138,14 @@ fun ScoreCard(
                     fontSize = 12.sp
                 )
             }
-            
+
             Divider(
                 modifier = Modifier
                     .height(60.dp)
                     .width(1.dp),
                 color = Color(0xFF3A3A3C)
             )
-            
+
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -181,12 +183,12 @@ fun CurrentPlayerIndicator(currentPlayer: Player) {
         ),
         label = "alpha"
     )
-    
+
     Text(
         text = "Player ${currentPlayer.symbol()}'s Turn",
-        color = if (currentPlayer == Player.X) 
-            Color(0xFF00C7FF).copy(alpha = alpha) 
-        else 
+        color = if (currentPlayer == Player.X)
+            Color(0xFF00C7FF).copy(alpha = alpha)
+        else
             Color(0xFFFF6B6B).copy(alpha = alpha),
         fontSize = 18.sp,
         fontWeight = FontWeight.Bold,
@@ -201,7 +203,8 @@ fun GameBoard(
     isGameOver: Boolean
 ) {
     Card(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier
+            .padding(horizontal = 16.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF2C2C2E)
         ),
@@ -244,14 +247,14 @@ fun GameCell(
         ),
         label = "cellScale"
     )
-    
+
     LaunchedEffect(player) {
         if (player != null && !hasAnimated) {
             delay(50)
             hasAnimated = true
         }
     }
-    
+
     Box(
         modifier = Modifier
             .size(80.dp)
@@ -285,11 +288,11 @@ fun GameOverDisplay(
     onBackToStart: () -> Unit
 ) {
     var showAnimation by remember { mutableStateOf(false) }
-    
+
     LaunchedEffect(Unit) {
         showAnimation = true
     }
-    
+
     AnimatedVisibility(
         visible = showAnimation,
         enter = scaleIn(
@@ -305,7 +308,7 @@ fun GameOverDisplay(
         ) {
             // Victory/Draw message with celebration animation
             VictoryMessage(winner = winner, isDraw = isDraw)
-            
+
             // Action buttons
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -320,7 +323,7 @@ fun GameOverDisplay(
                 ) {
                     Text("Play Again", fontWeight = FontWeight.Bold)
                 }
-                
+
                 OutlinedButton(
                     onClick = onBackToStart,
                     colors = ButtonDefaults.outlinedButtonColors(
@@ -350,21 +353,21 @@ fun VictoryMessage(
         ),
         label = "victoryScale"
     )
-    
+
     val message = when {
         isDraw -> "It's a Draw!"
         winner == Player.X -> "Player X Wins!"
         winner == Player.O -> "Player O Wins!"
         else -> ""
     }
-    
+
     val color = when {
         isDraw -> Color(0xFFFFC107)
         winner == Player.X -> Color(0xFF00C7FF)
         winner == Player.O -> Color(0xFFFF6B6B)
         else -> Color.White
     }
-    
+
     Text(
         text = message,
         fontSize = 24.sp,
@@ -372,5 +375,25 @@ fun VictoryMessage(
         color = color,
         textAlign = TextAlign.Center,
         modifier = Modifier.scale(scale)
+    )
+}
+
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun GameScreenPreview() {
+    GameScreen(
+        gameState = GameState(
+            board = List(3) { List(3) { null } },
+            currentPlayer = Player.X,
+            isGameOver = false,
+            winner = null,
+            isDraw = false,
+            xWins = 0,
+            oWins = 0
+        ),
+        onCellClick = { _, _ -> },
+        onNewGame = {},
+        onBackToStart = {}
     )
 }
